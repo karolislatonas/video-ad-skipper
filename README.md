@@ -1,1 +1,1 @@
-# video-ad-skipper
+Chrome extension for skipping video ads
