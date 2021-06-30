@@ -17,15 +17,7 @@ class AdSkipper{
     }
 
     OnVideoChange(){
-        if(Number.isNaN(this.video.duration)){
-            this.video.src="https://play.tv3.lt/3b70be0a-457c-45e9-8178-f2013a7c51b7"
-            console.dir(this.video);
-            console.log(this.video.src);
-            
-        }
-        else{
-            this.video.currentTime = this.video.duration + 1;
-        }
+        this.video.currentTime = this.video.duration + 1;
     }
     
     FindVideoElement(){
