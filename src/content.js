@@ -27,8 +27,6 @@ class AdSkipper{
             videos = this.FindVideoElementInIFrames();
         }
 
-        console.log(videos);
-    
         return [...videos]
             .find(v => this.IsElementVisible(v) && !Number.isNaN(v.duration));
     }
@@ -43,9 +41,10 @@ class AdSkipper{
             .filter(d => d !== null)
             .map(d => d.getElementsByTagName('video'))
             .filter(v => v !== null)
-            .filter(v => v.length > 0)
-
-        return videos[0];
+            .map(v => [...v])
+            .reduce((prev, current) => prev.concat(current))
+        
+        return videos
     }
     
     IsElementVisible(element){
@@ -56,6 +55,15 @@ class AdSkipper{
         var isVisible = (elemTop >= 0) && (elemBottom <= window.innerHeight);
         return isVisible;
     }
+
+    ClearCurrentVideo(){
+        if(!this.video){
+            return;
+        }
+
+        this.video.onloadedmetadata = undefined;
+        this.video = null;
+    }
 }
 
 chrome.runtime.onMessage.addListener(handleMessage);
@@ -65,9 +73,3 @@ var addSkipper = new AdSkipper();
 function handleMessage(){
     addSkipper.SkipAd();
 }
-
-
-
-
-
-
